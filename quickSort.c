@@ -2,34 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-int partition(int * a, int start, int stop){
-
-	int pivot = a[start];
-
-	int i = start+1;
-	int j = stop;
-	
-	while(i<=j){
-		if(a[i]>pivot) {
-			int temp = a[i];
-			a[i] = a[j];
-			a[j] = temp;
-			j=j-1;
-		}
-
-		else if (a[i]<pivot) {
-			i+=1;
-		}
-
-		//swap the pivot with a[j]
-		int t=a[j];
-		a[j] = pivot;
-		pivot = t;
-	}
-
-	return j;
-}
-
 void printArray(int * a, int n){
 	printf("Array = ");
 	for(int i=0;i<n;i++){
@@ -48,20 +20,41 @@ int * generateArray(int n){
 	return t;
 }
 
-void quicksort(int * a, int start, int stop){
-	if(!a || start>stop) {
-		exit(-1);
-	}
-
-	int p = partition(a, start, stop); //returns an element at pos p where everything at the right is <p and everything to the left is >p.
-	
-	quicksort(a,start,p-1); //sorts the "lesser" pile
-	
-	quicksort(a, p+1,stop); //sorts the "greater" pile
-
-	printArray(a,stop);
-
+void swap(int *a, int *b) {
+  int t = *a;
+  *a = *b;
+  *b = t;
 }
+
+int partition(int* a, int start, int stop) {
+  
+  int pivot = a[stop];
+  
+  int i = (start - 1);
+
+  for (int j = start; j < stop; j++) {
+    if (a[j] <= pivot) {
+      i++;
+      swap(&a[i], &a[j]);
+    }
+  }
+
+  swap(&a[i + 1], &a[stop]);
+  
+  return (i + 1);
+}
+
+void quickSort(int* a, int start, int stop) {
+  if (start < stop) {
+    
+    int p = partition(a, start, stop);
+    
+    quickSort(a, start, p - 1);
+    
+    quickSort(a, p + 1, stop);
+  }
+}
+
 
 int main(int argc, char **argv){
 	int n=10;
@@ -72,7 +65,9 @@ int main(int argc, char **argv){
 	a = generateArray(n);
 	printArray(a,n);
 	
-	quicksort(a,0,n);
+	quickSort(a,0,n-1);
+
+	printArray(a,n);
 
 	free(a);
 
