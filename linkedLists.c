@@ -28,8 +28,7 @@ void appendm(int ele, node *ptr){
 }
 
 int main(int argc, char **argv){
-        printf("hello world!");
-         int ele, len;
+        int ele, len;
         node *head;
         head = malloc(sizeof(node));
         printf("Enter number of elements you'd like to input:\t");
