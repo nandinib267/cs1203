@@ -8,7 +8,7 @@ struct Node{
 };
 
 typedef struct Node node;
-
+//hi
 void Traversal(node *ptr){
         while (ptr!=NULL){
                 printf("Element: %d\n", ptr->data);
